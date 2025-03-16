@@ -8,7 +8,7 @@ export default clerkMiddleware(async (auth, request) => {
       await auth.protect()
     }
 
-    if(request.url === process.env.BASE_URL) {
+    if(request.url === process.env.VERCEL_URL) {
       //redirecto to dashboard
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
