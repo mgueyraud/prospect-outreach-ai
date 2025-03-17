@@ -39,7 +39,7 @@ export default async function Page() {
           </CardContent>
           <CardFooter>
             <Button asChild variant="ghost" className="w-full">
-              <Link href="/dashboard/generations">
+              <Link prefetch href="/dashboard/generations">
                 Generate outreach
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -62,7 +62,7 @@ export default async function Page() {
           </CardContent>
           <CardFooter>
             <Button asChild variant="ghost" className="w-full">
-              <Link href="/dashboard/prospects  ">
+              <Link prefetch href="/dashboard/prospects  ">
                 Manage prospects
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
@@ -82,7 +82,7 @@ export default async function Page() {
           </CardContent>
           <CardFooter>
             <Button asChild variant="ghost" className="w-full">
-              <Link href="/dashboard/settings">
+              <Link prefetch href="/dashboard/settings">
                 Go to settings
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
