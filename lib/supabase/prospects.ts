@@ -6,6 +6,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { UserConfiguration } from "@/types/settings";
 import { Prospect } from "@/types/prospect";
+import { revalidatePath } from "next/cache";
 
 export async function getProspects(): Promise<Prospect[]> {
     const cookieStore = await cookies();
@@ -50,6 +51,7 @@ export async function createProspect(formData: FormData) {
         throw error;
     }
 
+    revalidatePath('/dashboard/generations')
     redirect('/dashboard/prospects');
 }
 
