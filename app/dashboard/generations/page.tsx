@@ -4,6 +4,8 @@ import Link from "next/link";
 import { getProspects } from "@/lib/supabase/prospects";
 import Generation from "@/components/generation";
 
+export const dynamic = "force-dynamic";
+
 export default async function GenerationsPage() {
   const companies = await getProspects();
 
