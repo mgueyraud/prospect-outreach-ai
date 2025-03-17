@@ -66,49 +66,6 @@ The application is built using Next.js with the App Router architecture, providi
 
 Authentication is handled by Clerk, providing secure user management and session handling. The application uses Clerk's user IDs to associate data with specific users in the database.
 
-
-
-### 2. `prospects`
-
-Stores information about target companies and contacts.
-
-```sql
-CREATE TABLE prospects (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    clerk_user_id VARCHAR(255) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    industry VARCHAR(100),
-    size VARCHAR(50),
-    website VARCHAR(255),
-    contact_person VARCHAR(100),
-    contact_title VARCHAR(100),
-    contact_email VARCHAR(255),
-    contact_phone VARCHAR(50),
-    notes TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-);
-```
-
-### 3. `generations`
-
-Stores generated outreach content for different platforms.
-
-```sql
-CREATE TABLE generations (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    clerk_user_id VARCHAR(255) NOT NULL,
-    prospect_id UUID REFERENCES prospects(id) ON DELETE CASCADE,
-    email_content TEXT,
-    linkedin_content TEXT,
-    twitter_content TEXT,
-    message_content TEXT,
-    additional_context TEXT,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT now(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
-);
-```
-
 ## Setup Instructions
 
 ### Prerequisites
