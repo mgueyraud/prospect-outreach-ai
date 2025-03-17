@@ -6,12 +6,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { getGenerations } from "@/lib/supabase/generation";
 import { getProspects } from "@/lib/supabase/prospects";
 import { ArrowRight, BarChart3, Database, Settings } from "lucide-react";
 import Link from "next/link";
 
 export default async function Page() {
-  const prospects = await getProspects();
+  const [generations, prospects] = await Promise.all([
+    getGenerations(),
+    getProspects(),
+  ]);
 
   return (
     <div className="p-6">
@@ -31,8 +35,7 @@ export default async function Page() {
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">12</div>
-            <p className="text-xs text-muted-foreground">+2 from last week</p>
+            <div className="text-2xl font-bold">{generations.length}</div>
           </CardContent>
           <CardFooter>
             <Button asChild variant="ghost" className="w-full">

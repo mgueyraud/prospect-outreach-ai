@@ -4,7 +4,10 @@ import { getProspectById, getUserSettings } from "./prospects";
 import { generateObject } from 'ai';
 import { openai } from '@ai-sdk/openai';
 import { z } from 'zod';
-import {  currentUser } from "@clerk/nextjs/server";
+import {  auth, currentUser } from "@clerk/nextjs/server";
+import { Prospect } from "@/types/prospect";
+import { cookies } from "next/headers";
+import { createClient } from "./server";
 
 // Define the schema for the AI response
 const outreachContentSchema = z.object({
@@ -23,7 +26,7 @@ export async function generateContent(_: OutreachContent, formData: FormData) {
     const user = await currentUser();
     
     const companyId = formData.get('companyId') as string;
-    const additionalContext = formData.get('additionalContext');
+    const additionalContext = formData.get('additionalContext') as string ?? '';
 
     if(!companyId){
         throw Error("No company id");
@@ -78,6 +81,62 @@ export async function generateContent(_: OutreachContent, formData: FormData) {
       schema: outreachContentSchema,
     })
 
+    await saveGeneration({
+      generation: object,
+      prospect: prospect,
+      additionalContext
+    })
+
 
     return object
+}
+
+export async function getGenerations() {
+  const cookieStore = await cookies();
+  const supabase = await createClient(cookieStore);
+  const { userId } = await auth();
+
+  const { data, error } = await supabase
+        .from('generations')
+        .select()
+        .eq('clerk_user_id', userId);
+
+  if(error) {
+    throw error;
+  }
+  
+  return data;
+}
+
+
+async function saveGeneration({
+  generation,
+  prospect,
+  additionalContext
+}: {
+  generation: OutreachContent,
+  prospect: Prospect,
+  additionalContext: string
+}){
+  const cookieStore = await cookies();
+  const supabase = await createClient(cookieStore);
+  const { userId } = await auth();
+
+  const generationData = {
+    clerk_user_id: userId,
+    prospect_id: prospect.id,
+    email_content: generation.email,
+    linkedin_content: generation.linkedin,
+    twitter_content: generation.twitter,
+    message_content: generation.message,
+    additional_context: additionalContext,
+  };
+
+  const { error } = await supabase
+    .from('generations')
+    .insert(generationData);
+
+  if (error) {
+    throw error;
+  }
 }

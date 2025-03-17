@@ -21,8 +21,6 @@ export async function getProspects(): Promise<Prospect[]> {
         throw error;
     }
 
-    console.log(data);
-
     return data;
 }
 
