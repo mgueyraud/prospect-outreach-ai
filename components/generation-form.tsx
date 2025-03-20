@@ -37,7 +37,7 @@ export default function GenerationForm({
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="space-y-2">
+        <div className="flex flex-col space-y-2">
           <label className="text-sm font-medium">Target Prospect</label>
           <Select name="companyId">
             <SelectTrigger>
@@ -55,7 +55,7 @@ export default function GenerationForm({
           </Select>
         </div>
 
-        <div className="space-y-2">
+        <div className="flex flex-col space-y-2">
           <label className="text-sm font-medium">Additional Context</label>
           <Textarea
             name="additionalContext"

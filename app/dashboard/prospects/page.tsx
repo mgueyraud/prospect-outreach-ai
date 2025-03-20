@@ -1,16 +1,9 @@
 import Link from "next/link";
-import { ArrowLeft, PlusCircle, Trash2 } from "lucide-react";
+import { ArrowLeft, PlusCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { deleteProspect, getProspects } from "@/lib/supabase/prospects";
+import { getProspects } from "@/lib/supabase/prospects";
+import ProspectsTable from "@/components/prospects-table";
 
 export default async function ProspectsPage() {
   const prospects = await getProspects();
@@ -33,50 +26,7 @@ export default async function ProspectsPage() {
       </div>
 
       <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Company Name</TableHead>
-              <TableHead>Industry</TableHead>
-              <TableHead>Contact Person</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {prospects.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={5} className="text-center">
-                  No prospects found. Add your first prospect to get started.
-                </TableCell>
-              </TableRow>
-            ) : (
-              prospects.map((prospect) => (
-                <TableRow key={prospect.id}>
-                  <TableCell className="font-medium">{prospect.name}</TableCell>
-                  <TableCell>{prospect.industry}</TableCell>
-                  <TableCell>{prospect.contact_person}</TableCell>
-                  <TableCell>{prospect.contact_email}</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end space-x-2">
-                      <form action={deleteProspect}>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          name="prospectId"
-                          value={prospect.id}
-                        >
-                          <Trash2 className="h-4 w-4 text-destructive" />
-                          <span className="sr-only">Delete</span>
-                        </Button>
-                      </form>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+        <ProspectsTable prospects={prospects} />
       </div>
     </div>
   );

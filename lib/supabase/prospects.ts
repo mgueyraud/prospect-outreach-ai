@@ -89,7 +89,7 @@ export async function deleteProspect(formData: FormData) {
         throw error;
     }
 
-    redirect('/dashboard/prospects');
+    revalidatePath('/dashboard/prospects');
 }
 
 export async function getUserSettings(): Promise<UserConfiguration | null> {
@@ -138,5 +138,5 @@ export async function createOrUpdateSettings(formData: FormData) {
         throw error;
     }
 
-    redirect('/dashboard/settings');
+    revalidatePath('/dashboard/settings');
 }

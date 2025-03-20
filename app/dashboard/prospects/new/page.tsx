@@ -1,7 +1,7 @@
 import type React from "react";
 
 import Link from "next/link";
-import { ArrowLeft, Save } from "lucide-react";
+import { ArrowLeft, LoaderCircle, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { createProspect } from "@/lib/supabase/prospects";
+import SubmitButton from "@/components/submit-button";
 
 export default function NewProspect() {
   return (
@@ -126,10 +127,21 @@ export default function NewProspect() {
             </div>
           </CardContent>
           <CardFooter>
-            <Button type="submit" className="ml-auto mt-6">
-              <Save className="mr-2 h-4 w-4" />
-              Save Prospect
-            </Button>
+            <SubmitButton
+              className="ml-auto mt-6 disabled:opacity-50"
+              idle={
+                <>
+                  <Save className="mr-2 h-4 w-4" />
+                  Save Prospect
+                </>
+              }
+              pending={
+                <>
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                  Saving...
+                </>
+              }
+            />
           </CardFooter>
         </form>
       </Card>

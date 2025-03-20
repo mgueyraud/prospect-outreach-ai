@@ -1,7 +1,6 @@
 import type React from "react";
 
-import { Save } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { LoaderCircle, Save } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   createOrUpdateSettings,
@@ -9,6 +8,7 @@ import {
 } from "@/lib/supabase/prospects";
 import ToneSetting from "@/components/tone-setting";
 import CompanyProfile from "@/components/company-profile";
+import SubmitButton from "@/components/submit-button";
 
 export default async function GeneralSettings() {
   const settings = await getUserSettings();
@@ -61,10 +61,21 @@ export default async function GeneralSettings() {
         </Tabs>
 
         <div className="mt-6 flex justify-end">
-          <Button type="submit">
-            <Save className="mr-2 h-4 w-4" />
-            Save Settings
-          </Button>
+          <SubmitButton
+            className="ml-auto mt-6 disabled:opacity-50"
+            idle={
+              <>
+                <Save className="mr-2 h-4 w-4" />
+                Save Settings
+              </>
+            }
+            pending={
+              <>
+                <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />
+                Saving...
+              </>
+            }
+          />
         </div>
       </form>
     </div>
