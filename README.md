@@ -2,7 +2,7 @@
 
 A powerful sales outreach platform that helps you create personalized content for different channels based on your company profile and prospect information.
 
-https://github.com/user-attachments/assets/bc872c6f-a031-4821-9cfb-1333a183e32d
+https://github.com/user-attachments/assets/400b73bc-7322-422c-8012-5673e95e88f0
 
 ## Table of Contents
 
